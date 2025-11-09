@@ -1,78 +1,78 @@
-# Proyecto MCP (Model Context Protocol) - Calculadora
+# MCP (Model Context Protocol) Project - Calculator
 
-Este proyecto es un ejemplo de cómo usar el protocolo MCP (Model Context Protocol) para crear un servidor y cliente que se comunican mediante stdio (entrada/salida estándar).
+This project is an example of how to use the MCP (Model Context Protocol) to create a server and client that communicate via stdio (standard input/output).
 
-## ¿Qué es MCP?
+## What is MCP?
 
-MCP (Model Context Protocol) es un protocolo que permite a las aplicaciones comunicarse con servidores que proporcionan herramientas (tools) y recursos (resources). En este caso, creamos un servidor de calculadora que puede realizar operaciones matemáticas básicas.
+MCP (Model Context Protocol) is a protocol that allows applications to communicate with servers that provide tools and resources. In this case, we create a calculator server that can perform basic mathematical operations.
 
-## Estructura del Proyecto
+## Project Structure
 
-### `server.py` - Servidor MCP
-El servidor expone:
-- **Herramientas (Tools)**: Funciones que el cliente puede llamar
-  - `add(a, b)`: Suma dos números
-  - `subtract(a, b)`: Resta dos números
-  - `multiply(a, b)`: Multiplica dos números
-  - `divide(a, b)`: Divide dos números
-  - `greet(name)`: Saluda a alguien por nombre
-  - `read_text(text)`: Lee y muestra contenido de texto
+### `server.py` - MCP Server
+The server exposes:
+- **Tools**: Functions that the client can call
+  - `add(a, b)`: Add two numbers
+  - `subtract(a, b)`: Subtract two numbers
+  - `multiply(a, b)`: Multiply two numbers
+  - `divide(a, b)`: Divide two numbers
+  - `greet(name)`: Greet someone by name
+  - `read_text(text)`: Read and display text content
 
-- **Recursos (Resources)**: Datos que el cliente puede leer
-  - `greeting://{name}`: Genera un saludo personalizado
+- **Resources**: Data that the client can read
+  - `greeting://{name}`: Generates a personalized greeting
 
-### `client.py` - Cliente MCP
-El cliente:
-1. Se conecta al servidor usando stdio
-2. Lista todas las herramientas disponibles
-3. Prueba las operaciones de calculadora
-4. Prueba la herramienta de saludo (greet)
-5. Prueba la herramienta de lectura de texto (read_text)
-6. Lista y lee los recursos disponibles
+### `client.py` - MCP Client
+The client:
+1. Connects to the server using stdio
+2. Lists all available tools
+3. Tests calculator operations
+4. Tests the greet tool
+5. Tests the read_text tool
+6. Lists and reads available resources
 
-## Cómo Ejecutar el Proyecto
+## How to Run the Project
 
-### 1. Activar el entorno virtual
+### 1. Activate the virtual environment
 
-En PowerShell:
+In PowerShell:
 ```powershell
 .\venv\Scripts\Activate.ps1
 ```
 
-Si tienes problemas con la política de ejecución, ejecuta primero:
+If you have issues with the execution policy, run first:
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
-### 2. Ejecutar el cliente
+### 2. Run the client
 
-El cliente se conectará automáticamente al servidor:
+The client will automatically connect to the server:
 ```powershell
 python client.py
 ```
 
-O si usas `py`:
+Or if you use `py`:
 ```powershell
 py client.py
 ```
 
-### 3. Ver la salida
+### 3. View the output
 
-El cliente mostrará:
-- ✅ Lista de herramientas disponibles
-- 🧮 Resultados de las operaciones matemáticas
-- 📄 Lista de recursos disponibles
-- 📖 Contenido de los recursos
+The client will display:
+- ✅ List of available tools
+- 🧮 Results of mathematical operations
+- 📄 List of available resources
+- 📖 Resource content
 
-## Flujo de Comunicación
+## Communication Flow
 
-1. El cliente inicia y crea una conexión stdio con el servidor
-2. El servidor se ejecuta como un proceso hijo
-3. El cliente envía solicitudes JSON-RPC al servidor
-4. El servidor procesa las solicitudes y devuelve respuestas
-5. El cliente muestra los resultados
+1. The client starts and creates a stdio connection with the server
+2. The server runs as a child process
+3. The client sends JSON-RPC requests to the server
+4. The server processes the requests and returns responses
+5. The client displays the results
 
-## Ejemplo de Salida
+## Example Output
 
 ```
 🚀 Starting MCP Python Client...
@@ -105,16 +105,16 @@ Divide 20 ÷ 4 = 5.0
 ✨ Client operations completed successfully!
 ```
 
-## Dependencias
+## Dependencies
 
-Las dependencias están en `requirements.txt`:
-- `mcp`: Librería principal del protocolo MCP
-- `fastmcp`: Framework para crear servidores MCP rápidamente
+Dependencies are in `requirements.txt`:
+- `mcp`: Main MCP protocol library
+- `fastmcp`: Framework for quickly creating MCP servers
 
-## Notas
+## Notes
 
-- El servidor se ejecuta automáticamente cuando el cliente se conecta
-- La comunicación se realiza mediante stdin/stdout (stdio)
-- No se requiere configuración adicional de red o puertos
+- The server runs automatically when the client connects
+- Communication is done via stdin/stdout (stdio)
+- No additional network or port configuration is required
 
 
