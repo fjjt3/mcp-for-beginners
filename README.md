@@ -9,7 +9,7 @@ MCP (Model Context Protocol) is a protocol that allows applications to communica
 ## Project Structure
 
 ### `server.py` - MCP Server
-The server exposes:
+The server uses **FastMCP** to expose:
 - **Tools**: Functions that the client can call
   - `add(a, b)`: Add two numbers
   - `subtract(a, b)`: Subtract two numbers
@@ -21,14 +21,14 @@ The server exposes:
 - **Resources**: Data that the client can read
   - `greeting://{name}`: Generates a personalized greeting
 
-### `client.py` - MCP Client
+### `client.py` - MCP Client with LLM
 The client:
-1. Connects to the server using stdio
-2. Lists all available tools
-3. Tests calculator operations
-4. Tests the greet tool
-5. Tests the read_text tool
-6. Lists and reads available resources
+1. Connects to `server.py` using stdio.
+2. Lists available tools and converts them to an LLM-compatible schema.
+3. Connects to **Azure AI Inference** (using GitHub Models).
+4. Sends a prompt ("Add 2 to 20") to the LLM.
+5. Receives the tool call instruction from the LLM.
+6. Executes the tool on the MCP server and displays the result.
 
 ## How to Run the Project
 
@@ -49,7 +49,21 @@ If you have issues with the execution policy on Windows, run first:
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
-### 2. Run the client
+### 2. Set up your GitHub Token
+
+You need a GitHub Personal Access Token to use the LLM models.
+
+On macOS/Linux:
+```bash
+export GITHUB_TOKEN="your_github_token_here"
+```
+
+On Windows (PowerShell):
+```powershell
+$env:GITHUB_TOKEN="your_github_token_here"
+```
+
+### 3. Run the client
 
 The client will automatically connect to the server:
 ```bash
@@ -63,65 +77,25 @@ On Windows you can also use:
 py client.py
 ```
 
-### 3. View the output
+### 4. View the output
 
 The client will display:
 - ✅ List of available tools
-- 🧮 Results of mathematical operations
-- 📄 List of available resources
-- 📖 Resource content
-
-## Communication Flow
-
-1. The client starts and creates a stdio connection with the server
-2. The server runs as a child process
-3. The client sends JSON-RPC requests to the server
-4. The server processes the requests and returns responses
-5. The client displays the results
-
-## Example Output
-
-```
-🚀 Starting MCP Python Client...
-📡 Connecting to MCP server...
-✅ Connected to MCP server successfully!
-
-📋 Listing available tools:
-  - add: Add two numbers
-  - subtract: Subtract two numbers
-  - multiply: Multiply two numbers
-  - divide: Divide two numbers
-  - greet: Greet someone by name
-  - read_text: Read and display text content
-
-🧮 Testing Calculator Operations:
-Add 5 + 3 = 8
-Subtract 10 - 4 = 6
-Multiply 6 × 7 = 42
-Divide 20 ÷ 4 = 5.0
-
-👋 Testing Greet Tool:
-  ¡Hola, Juan! ¿Cómo estás?
-
-📖 Testing Read Text Tool:
-  Texto leído: Este es un texto de prueba para la herramienta read_text
-
-📄 Listing available resources:
-  No resources available
-
-✨ Client operations completed successfully!
-```
+- 🔄 Converted tool schemas
+- 🤖 Calling LLM...
+- 🛠️ Tool execution result (e.g., "22")
 
 ## Dependencies
 
 Dependencies are in `requirements.txt`:
 - `mcp`: Main MCP protocol library
 - `fastmcp`: Framework for quickly creating MCP servers
+- `azure-ai-inference`: Client library for Azure AI Inference (GitHub Models)
 
 ## Notes
 
-- The server runs automatically when the client connects
-- Communication is done via stdin/stdout (stdio)
-- No additional network or port configuration is required
+- The server (`server.py`) runs automatically as a subprocess when the client (`client.py`) connects.
+- Communication is done via stdin/stdout (stdio).
+- Requires Python 3.10+ due to `fastmcp` dependencies.
 
 
