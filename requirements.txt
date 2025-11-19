@@ -1,3 +1,4 @@
 mcp
 fastmcp
 
+azure-ai-inference
