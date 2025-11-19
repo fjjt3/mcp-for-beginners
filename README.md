@@ -34,12 +34,17 @@ The client:
 
 ### 1. Activate the virtual environment
 
-In PowerShell:
+On macOS/Linux:
+```bash
+source venv/bin/activate
+```
+
+On Windows (PowerShell):
 ```powershell
 .\venv\Scripts\Activate.ps1
 ```
 
-If you have issues with the execution policy, run first:
+If you have issues with the execution policy on Windows, run first:
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
@@ -47,11 +52,13 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ### 2. Run the client
 
 The client will automatically connect to the server:
-```powershell
+```bash
 python client.py
+# or
+python3 client.py
 ```
 
-Or if you use `py`:
+On Windows you can also use:
 ```powershell
 py client.py
 ```
